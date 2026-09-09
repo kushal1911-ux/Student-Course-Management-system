@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e6c1b5;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: #d7d0d0;
+  color: rgb(239, 216, 142);
+}
+
+.navbar .brand {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.nav-links a {
+  color: white;
+  margin-right: 16px;
+  text-decoration: none;
+}
+
+.nav-links button {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.auth-container {
+  max-width: 320px;
+  margin: 60px auto;
+  padding: 24px;
+  background: rgb(196, 214, 77);
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.auth-container input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.auth-container button {
+  width: 100%;
+  padding: 8px;
+  background: #337ab7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.error {
+  color: #d9534f;
+  font-size: 14px;
+}
+
+.page-container {
+  max-width: 800px;
+  margin: 24px auto;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background: #f0f0f0;
+}
+
+.form-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.form-row input, .form-row select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-row button {
+  padding: 6px 14px;
+  background: #337ab7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.action-btn {
+  margin-right: 6px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-btn { background: #f0ad4e; color: white; }
+.delete-btn { background: #d9534f; color: white; }
+.success {
+  color: #093109;
+  font-size: 14px;
+}
