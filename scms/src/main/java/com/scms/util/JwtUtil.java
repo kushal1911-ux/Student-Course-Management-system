@@ -13,29 +13,24 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    // Secret key used to sign tokens (auto-generated at startup; in real production,
-    // this should be a fixed, securely stored value so tokens survive app restarts)
     private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
-    // Token validity: 1 hour (in milliseconds)
     private final long EXPIRATION_TIME = 1000 * 60 * 60;
 
-    // Generates a new JWT token containing the username, issued-at, and expiry time
-    public String generateToken(String username) {
+    // Generates a token containing username, role claim, issued-at, and expiry
+    public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("role", role)   // custom claim - readable by frontend after decoding
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(secretKey)
                 .compact();
     }
 
-    // Extracts the username stored inside a given token
     public String extractUsername(String token) {
         return getClaims(token).getSubject();
     }
 
-    // Checks if a token's signature is valid and it hasn't expired
     public boolean isTokenValid(String token, String username) {
         String extractedUsername = extractUsername(token);
         return extractedUsername.equals(username) && !isTokenExpired(token);

@@ -1,0 +1,41 @@
+#version: "3.8"
+
+services:
+  # MySQL database container
+  mysql-db:
+    image: mysql:8.0
+    container_name: scms-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: scms_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  # Spring Boot backend container
+  backend:
+    build: ./scms
+    container_name: scms-backend
+    restart: always
+    depends_on:
+      - mysql-db
+    ports:
+      - "8080:8080"
+
+  # React frontend container (served via Nginx)
+  frontend:
+    build:
+      context: ./scms-frontend--
+      args:
+        VITE_API_BASE_URL: http://localhost:8080   # backend URL as seen by the BROWSER, not other containers
+    container_name: scms-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3001:80"   # host:container - visit http://localhost:3001
+
+volumes:
+  mysql-data:

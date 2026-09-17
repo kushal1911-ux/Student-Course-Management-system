@@ -1,4 +1,5 @@
 package com.scms.dto;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,4 +16,7 @@ public class RegisterRequest {
 
     @NotBlank(message = "Password is required")
     private String password;
+
+    // Optional - "ROLE_USER" or "ROLE_ADMIN". Defaults to ROLE_USER if not provided.
+    private String role;
 }

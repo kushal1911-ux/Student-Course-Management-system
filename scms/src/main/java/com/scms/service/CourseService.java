@@ -7,6 +7,9 @@ import com.scms.exception.ResourceNotFoundException;
 import com.scms.repository.CourseRepository;
 import com.scms.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,12 +43,10 @@ public class CourseService {
         return toDTO(courseRepository.save(course));
     }
 
-    // Get all courses
-    public List<CourseDTO> getAllCourses() {
-        return courseRepository.findAll()
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
+    // Get a page of courses instead of the entire table at once
+    public Page<CourseDTO> getAllCourses(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return courseRepository.findAll(pageable).map(this::toDTO);
     }
 
     // Get single course by id
@@ -55,7 +56,7 @@ public class CourseService {
         return toDTO(course);
     }
 
-    // Get all courses belonging to a specific student
+    // Get all courses belonging to a specific student (not paginated - list is typically small)
     public List<CourseDTO> getCoursesByStudentId(Long studentId) {
         return courseRepository.findByStudentId(studentId)
                 .stream()

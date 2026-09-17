@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-// CORS configuration - allows a frontend (e.g. React app) running on a different
-// port/domain to call this backend's APIs from the browser.
+// CORS configuration - allows both the local Vite dev server and the
+// Dockerized Nginx-served frontend to call this backend's APIs.
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
@@ -15,11 +15,11 @@ public class CorsConfig implements WebMvcConfigurer {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")               // apply to all API endpoints
-                        .allowedOrigins("http://localhost:5173") // allowed frontend origin (change as needed)
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://localhost:5173", "http://localhost:3001")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")                  // allow all headers (e.g. Authorization, Content-Type)
-                        .allowCredentials(true);               // allow cookies/auth headers to be sent
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }

@@ -5,10 +5,10 @@ import com.scms.entity.Student;
 import com.scms.exception.ResourceNotFoundException;
 import com.scms.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 // Service layer - business logic + conversion between Entity and DTO
 @Service
@@ -38,12 +38,11 @@ public class StudentService {
         return toDTO(saved);
     }
 
-    // Get all students
-    public List<StudentDTO> getAllStudents() {
-        return studentRepository.findAll()
-                .stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
+    // Get a page of students instead of the entire table at once.
+    // Pageable bundles page number + size + (optionally) sorting into one object.
+    public Page<StudentDTO> getAllStudents(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return studentRepository.findAll(pageable).map(this::toDTO);
     }
 
     // Get single student by id, throws exception if not found
